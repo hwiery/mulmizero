@@ -1,0 +1,14 @@
+.gradle/
+build/
+app/build/
+local.properties
+.idea/
+*.iml
+.DS_Store
+captures/
+.externalNativeBuild/
+.cxx/
+# signing material lives outside the repo (~/.mulmizero-keystore/)
+*.jks
+*.keystore
+keystore.properties
