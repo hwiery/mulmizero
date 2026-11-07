@@ -35,6 +35,7 @@ interface LocationInput {
 
 enum class ActuationStatus(val label: String) {
     APPLIED_SDK("SDK 적용"),
+    PARTIAL_SDK("일부 SDK 적용"),
     NEEDS_APPROVAL("승인 필요 · 시뮬레이션"),
     UNSUPPORTED("미지원 · 시뮬레이션"),
     SIMULATED("시뮬레이션"),

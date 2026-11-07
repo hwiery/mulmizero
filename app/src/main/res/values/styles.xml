@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Card">
+        <item name="android:background">@drawable/bg_card</item>
+        <item name="android:padding">22dp</item>
+    </style>
+    <style name="CardTitle">
+        <item name="android:textColor">@color/sub</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+    <style name="Chip">
+        <item name="android:background">@drawable/bg_chip</item>
+        <item name="android:textColor">@color/text</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:paddingStart">22dp</item>
+        <item name="android:paddingEnd">22dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginStart">10dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+    <style name="BigButton">
+        <item name="android:textColor">@color/text</item>
+        <item name="android:textSize">34sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+</resources>

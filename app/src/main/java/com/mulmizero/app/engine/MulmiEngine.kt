@@ -80,7 +80,7 @@ class MulmiEngine(
     private fun report(what: String, res: ActuationResult) {
         actuation[what] = res
         val type = when {
-            res.status == ActuationStatus.APPLIED_SDK -> EventType.SDK
+            res.status == ActuationStatus.APPLIED_SDK || res.status == ActuationStatus.PARTIAL_SDK -> EventType.SDK
             what.startsWith("공조") -> EventType.CLIMATE
             else -> EventType.ROUTE
         }

@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="18dp">
+
+        <!-- ===== top bar ===== -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="멀미제로"
+                android:textColor="@color/text"
+                android:textSize="32sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvStatus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/sub"
+                android:textSize="22sp" />
+
+            <TextView android:id="@+id/chipScenario" style="@style/Chip" android:layout_width="wrap_content" android:layout_height="52dp" android:text="▶ 시나리오 재생" />
+            <TextView android:id="@+id/chipLive" style="@style/Chip" android:layout_width="wrap_content" android:layout_height="52dp" android:text="● 실시간(SDK)" />
+            <TextView android:id="@+id/chipRestart" style="@style/Chip" android:layout_width="wrap_content" android:layout_height="52dp" android:text="↺ 처음부터" />
+            <TextView android:id="@+id/chipSpeed" style="@style/Chip" android:layout_width="wrap_content" android:layout_height="52dp" android:text="1x" />
+            <TextView android:id="@+id/chipMic" style="@style/Chip" android:layout_width="wrap_content" android:layout_height="52dp" android:text="🎤 말하기" />
+            <TextView android:id="@+id/chipSick" style="@style/Chip" android:layout_width="wrap_content" android:layout_height="52dp" android:background="@drawable/bg_chip_red" android:text="동승자: 멀미나" />
+        </LinearLayout>
+
+        <!-- ===== main row ===== -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <!-- left: gauge -->
+            <LinearLayout
+                style="@style/Card"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.8"
+                android:orientation="vertical">
+
+                <TextView android:id="@+id/tvGaugeTitle" style="@style/CardTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="멀미 위험 지수 (1초 단위)" />
+
+                <com.mulmizero.app.ui.GaugeView
+                    android:id="@+id/gauge"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tvProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_card2"
+                    android:padding="14dp"
+                    android:textColor="@color/text"
+                    android:textSize="22sp" />
+            </LinearLayout>
+
+            <!-- center: turn / prompt / care -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1.35"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    style="@style/Card"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.95"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <com.mulmizero.app.ui.TurnArrowView
+                        android:id="@+id/turnArrow"
+                        android:layout_width="150dp"
+                        android:layout_height="match_parent" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView android:id="@+id/tvTurnTag" style="@style/CardTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="다음 회전 (NaviHelper TBT)" />
+                        <TextView
+                            android:id="@+id/tvTurnTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text"
+                            android:textSize="40sp"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/tvTurnSub"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:textColor="@color/sub"
+                            android:textSize="22sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/promptCard"
+                    style="@style/Card"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_weight="1.15"
+                    android:orientation="vertical">
+
+                    <TextView android:id="@+id/tvPromptTag" style="@style/CardTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/tvPrompt"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/text"
+                        android:textSize="34sp" />
+                    <TextView
+                        android:id="@+id/tvCaption"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        android:textColor="@color/sub"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/Card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvCare"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text"
+                        android:textSize="24sp" />
+                    <TextView
+                        android:id="@+id/tvCareStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        android:textColor="@color/sub"
+                        android:textSize="18sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- right: factors + data sources -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1.0"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    style="@style/Card"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1.15"
+                    android:orientation="vertical">
+
+                    <TextView style="@style/CardTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="요인별 점수 (v1 규칙 기반 가중합)" />
+                    <com.mulmizero.app.ui.FactorBarsView
+                        android:id="@+id/factors"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/Card"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView android:id="@+id/tvSourcesTitle" style="@style/CardTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="데이터 출처 (SDK / SIM)" />
+                    <TextView
+                        android:id="@+id/tvSources"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="monospace"
+                        android:textColor="@color/text"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ===== timeline + log ===== -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                style="@style/Card"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.35"
+                android:orientation="vertical">
+
+                <TextView android:id="@+id/tvTimelineTitle" style="@style/CardTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="타임라인" />
+                <com.mulmizero.app.ui.TimelineView
+                    android:id="@+id/timeline"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/Card"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView style="@style/CardTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="이벤트 로그" />
+                <TextView
+                    android:id="@+id/tvLog"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="bottom"
+                    android:textColor="@color/text"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ===== two big buttons (driver) ===== -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/btnPrimary"
+                style="@style/BigButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/bg_btn_primary" />
+
+            <TextView
+                android:id="@+id/btnSecondary"
+                style="@style/BigButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_btn_secondary" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- ===== trip report overlay (mockup screen ③) ===== -->
+    <FrameLayout
+        android:id="@+id/reportOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#E6070A10"
+        android:clickable="true"
+        android:visibility="gone">
+
+        <LinearLayout
+            style="@style/Card"
+            android:layout_width="1250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:padding="40dp">
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="트립 리포트" android:textColor="@color/sub" android:textSize="26sp" />
+                <TextView android:id="@+id/tvReportRoute" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/sub" android:textSize="26sp" />
+            </LinearLayout>
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="18dp" android:text="패밀리 승차감 점수" android:textColor="@color/text" android:textSize="30sp" />
+
+            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="bottom" android:orientation="horizontal">
+                <TextView android:id="@+id/tvReportScore" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/green" android:textSize="120sp" android:textStyle="bold" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="26dp" android:layout_marginStart="10dp" android:text="/ 100" android:textColor="@color/sub" android:textSize="40sp" />
+            </LinearLayout>
+
+            <TextView android:id="@+id/tvBar1Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:textColor="@color/text" android:textSize="24sp" />
+            <ProgressBar android:id="@+id/bar1" style="@android:style/Widget.ProgressBar.Horizontal" android:layout_width="match_parent" android:layout_height="22dp" android:layout_marginTop="8dp" android:max="100" android:progressTint="@color/green" android:progressBackgroundTint="@color/track" />
+            <TextView android:id="@+id/tvBar2Label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="18dp" android:textColor="@color/text" android:textSize="24sp" />
+            <ProgressBar android:id="@+id/bar2" style="@android:style/Widget.ProgressBar.Horizontal" android:layout_width="match_parent" android:layout_height="22dp" android:layout_marginTop="8dp" android:max="100" android:progressTint="@color/green" android:progressBackgroundTint="@color/track" />
+
+            <TextView android:id="@+id/tvReportSummary" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="24dp" android:background="@drawable/bg_card2" android:padding="20dp" android:textColor="@color/text" android:textSize="24sp" />
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="100dp" android:layout_marginTop="24dp" android:orientation="horizontal">
+                <TextView android:id="@+id/btnSaveProfile" style="@style/BigButton" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:background="@drawable/bg_btn_primary" android:text="가족 프로필에 저장" />
+                <TextView android:id="@+id/btnReplay" style="@style/BigButton" android:layout_width="0dp" android:layout_height="match_parent" android:layout_marginStart="14dp" android:layout_weight="1" android:background="@drawable/bg_btn_secondary" android:text="다시 재생" />
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+</FrameLayout>
