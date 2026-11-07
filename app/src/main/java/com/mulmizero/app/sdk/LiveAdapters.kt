@@ -51,7 +51,9 @@ class HybridFrameSource(
         val occ = vehicle.occupancy
         val rear: Boolean?
         val front: Boolean?
-        if (occ.isNotEmpty()) {
+        val occSupported = vehicle.status["좌석착석"]?.let { it.startsWith("지원") || it.startsWith("수신") } == true
+        if (occ.isNotEmpty() || occSupported) {
+            // supported by the vehicle: never invent a passenger while waiting for the first event
             src["좌석착석"] = "SDK"
             rear = (occ[SeatValue.ROW_2_LEFT]?.value == true) || (occ[SeatValue.ROW_2_RIGHT]?.value == true)
             front = occ[SeatValue.ROW_1_RIGHT]?.value == true

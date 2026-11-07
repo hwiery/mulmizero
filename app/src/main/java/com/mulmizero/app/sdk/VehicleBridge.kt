@@ -312,6 +312,25 @@ class VehicleBridge(context: Context, private val log: (String) -> Unit) {
             }
         }
         log("Vehicle SDK 리스너 등록: 조향각·브레이크·주행시간·기어·HVAC·좌석")
+        main.removeCallbacks(seatPoll)
+        main.postDelayed(seatPoll, 2000)
+    }
+
+    /**
+     * SeatOccupancyListener carries no area id and, on the emulator, later changes were delivered to
+     * only one of several per-seat registrations. Poll each seat every 2 s as well.
+     */
+    private val seatPoll = object : Runnable {
+        override fun run() {
+            val v = vehicle ?: return
+            runCatching {
+                val s = v.getSeat()
+                for (seat in listOf(SeatValue.ROW_1_RIGHT, SeatValue.ROW_2_LEFT, SeatValue.ROW_2_RIGHT)) {
+                    s.getCurrentSeatOccupancy(SeatArea(seat), { b: Boolean? -> b?.let { onSeat(seat, it) } }, { _: Exception -> })
+                }
+            }
+            main.postDelayed(this, 2000)
+        }
     }
 
     private fun recv(key: String, text: String) { status[key] = "수신 $text" }
@@ -333,8 +352,11 @@ class VehicleBridge(context: Context, private val log: (String) -> Unit) {
         }
         gear = Sample(m); recv("기어", g.name.removePrefix("GEAR_"))
     }
-    private fun onSeat(seat: SeatValue, b: Boolean) {
+    private fun onSeat(seat: SeatValue, raw: Boolean) {
+        val b = if (OCCUPANCY_BOOLEAN_INVERTED) !raw else raw
+        val prev = occupancy[seat]?.value
         occupancy[seat] = Sample(b)
+        if (prev != b) android.util.Log.i("MulmiZero", "SeatOccupancy ${seat.name} sdk=$raw → occupied=$b")
         val txt = occupancy.entries.sortedBy { it.key.ordinal }
             .joinToString(" ") { "${seatLabel(it.key)}${if (it.value.value) "●" else "○"}" }.replace("2열좌", "2L").replace("2열우", "2R").replace("조수석", "조")
         recv("좌석착석", txt)
@@ -444,6 +466,13 @@ class VehicleBridge(context: Context, private val log: (String) -> Unit) {
     }
 
     companion object {
+        /**
+         * Observed on Pleos Connect Emulator v2.1 with Vehicle SDK 2.3.2: the Boolean delivered by
+         * getCurrentSeatOccupancy / SeatOccupancyListener is `true` for VHAL SEAT_OCCUPANCY=1 (VACANT)
+         * and `false` for 2 (OCCUPIED) — see README "알려진 이슈". Re-verify on a real vehicle.
+         */
+        const val OCCUPANCY_BOOLEAN_INVERTED = true
+
         fun shortError(e: Throwable): String {
             val m = (e.message ?: "").replace("\n", " ").replace("java.lang.", "").take(70)
             return if (e is SecurityException) "SecurityException(권한) $m" else "${e.javaClass.simpleName} $m".trim()
